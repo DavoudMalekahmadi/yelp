@@ -106,7 +106,7 @@ def business_checkin_daily(spark, df_business, df_checkin, df_review) -> None:
 
     df_business_stars_avg = spark.read \
         .option('inferSchema', True) \
-        .parquet('out_put_raw/df_business_stars_avg')
+        .parquet('out_put_agg/business_stars_avg')
     df_business_stars_avg.createOrReplaceTempView('df_business_stars_avg')
 
     df_business_checkin_daily_stars_compare = spark.sql('select a.*, b.avg_stars '
@@ -139,7 +139,7 @@ def business_checkin_weekly(spark, df_business, df_checkin, df_review) -> None:
 
     df_business_stars_avg = spark.read \
         .option('inferSchema', True) \
-        .parquet('out_put_raw/df_business_stars_avg')
+        .parquet('out_put_agg/business_stars_avg')
     df_business_stars_avg.createOrReplaceTempView('df_business_stars_avg')
 
     df_business_checkin_weekly_stars_compare = spark.sql('select a.*, b.avg_stars '
@@ -166,13 +166,13 @@ def business_checkin_monthly(spark, df_business, df_checkin, df_review) -> None:
         .count()\
         .createOrReplaceTempView('df_checkin_monthly')
 
-    df_business_checkin_monthly = spark.sql('select a.*, b.name, b.city, b.address, b.stars'
+    df_business_checkin_monthly = spark.sql('select a.*, b.name, b.city, b.address, b.stars '
                                           'from df_checkin_monthly a inner join df_business b on a.business_id = b.business_id')
     df_business_checkin_monthly.createOrReplaceTempView('df_business_checkin_monthly')
 
     df_business_stars_avg = spark.read \
         .option('inferSchema', True) \
-        .parquet('out_put_raw/df_business_stars_avg')
+        .parquet('out_put_agg/business_stars_avg')
     df_business_stars_avg.createOrReplaceTempView('df_business_stars_avg')
 
     df_business_checkin_monthly_stars_compare = spark.sql('select a.*, b.avg_stars '
