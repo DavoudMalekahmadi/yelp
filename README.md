@@ -1,4 +1,4 @@
-# New Yorker Data Engineering Test
+# Data Engineering Test
 
 ## Design Decisions
 I created two python files:
